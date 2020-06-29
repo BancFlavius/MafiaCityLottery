@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "27013211452",
+    "firebase_url": "https://mafia-city-lottery.firebaseio.com",
+    "project_id": "mafia-city-lottery",
+    "storage_bucket": "mafia-city-lottery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27013211452:android:1ecc9e03e0cf9accc9aa39",
+        "android_client_info": {
+          "package_name": "com.mafiacity.lottery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27013211452-q5eljtkhkihu16dlpo9eb065j7bksnk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTLgi4UdXc9IJK-p009BH4BGe-UnDuugE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27013211452-q5eljtkhkihu16dlpo9eb065j7bksnk9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

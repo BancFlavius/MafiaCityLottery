@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Mafia City Lottery</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_password_confirm">Password confirm</string>
+    <string name="hint_firstname_signup">First name</string>
+    <string name="hint_lastname_signup">Last name</string>
+    <string name="hint_email">Email</string>
+    <string name="button_login">Log In</string>
+    <string name="btn_signup">SIGN UP</string>
+    <string name="tv_existing_account">Already have an account? Log In</string>
+    <string name="tv_sign_up_account">Don\'t have an account? Sign Up</string>
+    <string name="error_email_empty">Email cannot be empty</string>
+    <string name="error_pass_empty">Password cannot be empty</string>
+    <string name="error_email_invalid">Email is invalid</string>
+    <string name="error_password_short">Password is too short</string>
+    <string name="error_password_mismatch">Password mismatch</string>
+    <string name="error_firstname_empty">First name cannot be empty</string>
+    <string name="error_name_long">Name is too long</string>
+    <string name="error_lastname_empty">Last name cannot be empty</string>
+</resources>

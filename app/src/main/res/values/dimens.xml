@@ -1,0 +1,44 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="double_activity_vertical_margin">32dp</dimen>
+    <dimen name="half_vertical_padding">8dp</dimen>
+    <dimen name="half_horizontal_padding">8dp</dimen>
+    <dimen name="activity_quarter_vertical_margin">4dp</dimen>
+
+    <dimen name="appbar_padding_top">8dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="general_button_width">240dp</dimen>
+    <dimen name="general_button_height">20dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+
+    <dimen name="logo_bar_height">40dp</dimen>
+
+    <dimen name="notification_circle_height">56dp</dimen>
+    <!--must be size of notification_circle_height + padding-->
+
+    <dimen name="circle_button_size">64dp</dimen>
+    <dimen name="negative_half_circle_button_size">-32dp</dimen>
+    <dimen name="half_circle_button_size">32dp</dimen>
+    <dimen name="circle_button_small_size">32dp</dimen>
+    <dimen name="create_report_header_height">160dp</dimen>
+    <dimen name="comment_input_height">200dp</dimen>
+    <dimen name="large_number_size">28sp</dimen>
+    <dimen name="default_icon_size">40dp</dimen> //32 + 8 padding
+
+    <dimen name="report_picture_size">160dp</dimen>
+
+    <dimen name="design_navigation_icon_size" tools:override="true">48dp</dimen>
+
+    <dimen name="widget_container_width">90dp</dimen>
+    <dimen name="widget_container_height">160dp</dimen>
+
+    <dimen name="dialog_button_width">120dp</dimen>
+    <dimen name="dialog_button_height">40dp</dimen>
+    <dimen name="textLarge">16sp</dimen>
+
+</resources>
