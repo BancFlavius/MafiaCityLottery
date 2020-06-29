@@ -18,7 +18,7 @@ public class SignUpActivity extends AppCompatActivity {
 
 
     private Button btnStartActivity;
-    
+
     private FirebaseAuth mAuth;
 
 
@@ -32,14 +32,12 @@ public class SignUpActivity extends AppCompatActivity {
         initializeViews();
     }
 
-    private void signUp(){
-        System.out.println("inside signup");
+    private void signUp() {
         TextInputLayout firstname = findViewById(R.id.et_firstname_layout);
         TextInputLayout lastname = findViewById(R.id.et_lastname_layout);
-        
+
         String[] displayName = Validator.validateDisplayName(firstname, lastname);
-        if(displayName != null) {
-            System.out.println("diplay != null");
+        if (displayName != null) {
             TextInputLayout email = findViewById(R.id.et_email_layout);
             TextInputLayout password = findViewById(R.id.et_password_layout);
             TextInputLayout pasConfirm = findViewById(R.id.et_password_confirm_layout);
@@ -47,14 +45,11 @@ public class SignUpActivity extends AppCompatActivity {
             String[] emailPassword = Validator.validateRegistration(email, password, pasConfirm);
 
             if (emailPassword != null) {
-                System.out.println("email != null");
                 mAuth.createUserWithEmailAndPassword(emailPassword[0], emailPassword[1]).addOnCompleteListener(
                         task -> {
                             if (task.isSuccessful()) {
-                                System.out.println("task is successful");
                                 AuthResult result = task.getResult();
                                 if (result != null) {
-                                    System.out.println("result != null");
                                     FirebaseUser user = result.getUser();
                                     postNewUser(user.getUid(), user.getEmail(), displayName[0], displayName[1]);
                                 }
@@ -66,8 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    private void postNewUser(String userKey, String email, String firstName, String lastName){
-        System.out.println("posting new user");
+    private void postNewUser(String userKey, String email, String firstName, String lastName) {
         User user = new User();
 
         user.email = email;
@@ -80,19 +74,18 @@ public class SignUpActivity extends AppCompatActivity {
                 .child(userKey)
                 .setValue(user)
                 .addOnSuccessListener(aVoid -> {
-                    System.out.println("Sign up successful");
                     FirebaseMessaging firebaseMessaging = FirebaseMessaging.getInstance();
                     firebaseMessaging.subscribeToTopic(FireBaseContract.NEW_LOTO_EVENT);
                 });
     }
 
-    private void initializeViews(){
+    private void initializeViews() {
         btnStartActivity = findViewById(R.id.btn_signup);
         btnStartActivity.setOnClickListener(this::onClick);
     }
 
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_existing_account:
                 System.out.println("Starting login activity");
                 SignUpActivity.this.startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
