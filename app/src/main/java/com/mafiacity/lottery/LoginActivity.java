@@ -1,7 +1,9 @@
 package com.mafiacity.lottery;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -49,6 +51,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUi(FirebaseUser user) {
+        if(user !=null){
+            LoginActivity.this.startActivity(new Intent(LoginActivity.this, MainMenuActivity.class));
+        }
 
     }
 
@@ -66,11 +71,11 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        System.out.println("successful sign in");
+                        Log.d("INFO", "successful sign in");
                         FirebaseUser user = mAuth.getCurrentUser();
                         updateUi(user);
                     } else {
-                        System.out.println("unsuccessful sign in");
+                        Log.d("INFO", "Unsuccessful sign in");
                         Toast.makeText(LoginActivity.this, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show();
                         updateUi(null);
@@ -103,11 +108,11 @@ public class LoginActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_existing_account:
-                System.out.println("Finishing LoginActivity");
+                Log.d("INFO", "Finishing LoginActivity");
                 finish();
                 break;
-            case R.id.btn_signup:
-                System.out.println("User log in");
+            case R.id.btn_login:
+                Log.d("INFO", "User log in");
                 signIn(emailView.getText().toString(), passwordView.getText().toString());
                 break;
         }

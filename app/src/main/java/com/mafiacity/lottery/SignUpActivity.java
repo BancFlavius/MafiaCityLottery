@@ -17,11 +17,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class SignUpActivity extends AppCompatActivity {
 
-
     private Button btnStartActivity;
 
     private FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +42,9 @@ public class SignUpActivity extends AppCompatActivity {
             TextInputLayout pasConfirm = findViewById(R.id.et_password_confirm_layout);
 
             Validator.checkEmailExists(email.getEditText().getText().toString(), exists -> {
-                if(exists){
+                if (exists) {
                     email.setError(getString(R.string.error_email_exists));
-                }else{
+                } else {
                     email.setErrorEnabled(false);
                     String[] emailPassword = Validator.validateRegistration(email, password, pasConfirm);
 
@@ -58,6 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         if (result != null) {
                                             FirebaseUser user = result.getUser();
                                             postNewUser(user.getUid(), user.getEmail(), displayName[0], displayName[1]);
+                                            startMainMenuActivity();
                                         }
                                     }
                                 }
@@ -68,6 +67,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    private void startMainMenuActivity() {
+        SignUpActivity.this.startActivity(new Intent(SignUpActivity.this, MainMenuActivity.class));
+        Log.d("INFO", "Successful sign up");
     }
 
     private void postNewUser(String userKey, String email, String firstName, String lastName) {
