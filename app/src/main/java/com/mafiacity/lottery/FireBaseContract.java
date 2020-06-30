@@ -19,5 +19,6 @@ public class FireBaseContract {
                 EMAIL_FIELD = "email";
     }
 
+
 }
 

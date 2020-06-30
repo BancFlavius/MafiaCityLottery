@@ -2,6 +2,7 @@ package com.mafiacity.lottery;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -42,21 +43,29 @@ public class SignUpActivity extends AppCompatActivity {
             TextInputLayout password = findViewById(R.id.et_password_layout);
             TextInputLayout pasConfirm = findViewById(R.id.et_password_confirm_layout);
 
-            String[] emailPassword = Validator.validateRegistration(email, password, pasConfirm);
+            Validator.checkEmailExists(email.getEditText().getText().toString(), exists -> {
+                if(exists){
+                    email.setError(getString(R.string.error_email_exists));
+                }else{
+                    email.setErrorEnabled(false);
+                    String[] emailPassword = Validator.validateRegistration(email, password, pasConfirm);
 
-            if (emailPassword != null) {
-                mAuth.createUserWithEmailAndPassword(emailPassword[0], emailPassword[1]).addOnCompleteListener(
-                        task -> {
-                            if (task.isSuccessful()) {
-                                AuthResult result = task.getResult();
-                                if (result != null) {
-                                    FirebaseUser user = result.getUser();
-                                    postNewUser(user.getUid(), user.getEmail(), displayName[0], displayName[1]);
+                    if (emailPassword != null) {
+                        mAuth.createUserWithEmailAndPassword(emailPassword[0], emailPassword[1]).addOnCompleteListener(
+                                task -> {
+                                    if (task.isSuccessful()) {
+                                        AuthResult result = task.getResult();
+                                        if (result != null) {
+                                            FirebaseUser user = result.getUser();
+                                            postNewUser(user.getUid(), user.getEmail(), displayName[0], displayName[1]);
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                );
-            }
+                        );
+                    }
+                }
+            });
+
         }
 
     }
@@ -87,11 +96,11 @@ public class SignUpActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_existing_account:
-                System.out.println("Starting login activity");
+                Log.d("INFO", "starting login activity");
                 SignUpActivity.this.startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
                 break;
             case R.id.btn_signup:
-                System.out.println("User sign up");
+                Log.d("INFO", "user sign up");
                 signUp();
                 break;
         }

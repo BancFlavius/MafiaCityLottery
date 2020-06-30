@@ -5,16 +5,26 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Patterns;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Validator {
 
     private static final byte PASSWORD_LENGTH = 6;
-    private static final byte NAME_MAX_LENGTH =  16;
+    private static final byte NAME_MAX_LENGTH = 16;
+    private static boolean emailFound = false;
 
-    /** Every TextInputLayout must have an EditText child
-     * @param etEmail TextInputLayout
-     * @param etPassword TextInputLayout
+
+    /**
+     * Every TextInputLayout must have an EditText child
+     *
+     * @param etEmail           TextInputLayout
+     * @param etPassword        TextInputLayout
      * @param etConfirmPassword TextInputLayout
      * @return a string[] containing email and password, or null if not valid
      */
@@ -55,51 +65,85 @@ public class Validator {
             return null;
         }
 
+        etConfirmPassword.setErrorEnabled(false);
+        etEmail.setErrorEnabled(false);
+        etPassword.setErrorEnabled(false);
         return new String[]{email, password};
     }
 
-    /** Every TextInputLayout must have an EditText child
-     * @param emailView TextInputLayout
-     * @param passwordView TextInputLayout
+    public static void checkEmailExists(String email, MyCallback myCallback) {
+        FirebaseDatabase.getInstance()
+                .getReference()
+                .child(FireBaseContract.USERS_CHILD)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot data : snapshot.getChildren()) {
+                                User user = data.getValue(User.class);
+                                if (user != null && user.getEmail().equals(email)) {
+                                    myCallback.onCallback(true);
+                                    break;
+                                }else{
+                                    myCallback.onCallback(false);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        System.out.println(error.getMessage() + ". " + error.getDetails());
+                    }
+                });
+    }
+
+    /**
+     * Every TextInputLayout must have an EditText child
+     *
+     * @param etEmail    TextInputLayout
+     * @param etPassword TextInputLayout
      * @return a string[] containing email and password, or null if not valid
      */
-    public static String[] validateLogin(TextInputLayout emailView, TextInputLayout passwordView) {
-        Context context = emailView.getContext();
+    public static String[] validateLogin(TextInputLayout etEmail, TextInputLayout etPassword) {
+        Context context = etEmail.getContext();
 
-        String email = emailView.getEditText().getText().toString();
-        String password = passwordView.getEditText().getText().toString();
+        String email = etEmail.getEditText().getText().toString();
+        String password = etPassword.getEditText().getText().toString();
 
         if (TextUtils.isEmpty(email)) {
-            emailView.setError(context.getString(R.string.error_email_empty));
+            etEmail.setError(context.getString(R.string.error_email_empty));
             return null;
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailView.setError(context.getString(R.string.error_email_invalid));
+            etEmail.setError(context.getString(R.string.error_email_invalid));
             return null;
         }
 
         if (TextUtils.isEmpty(password)) {
-            passwordView.setError(context.getString(R.string.error_pass_empty));
+            etPassword.setError(context.getString(R.string.error_pass_empty));
             return null;
         }
 
         if (password.length() < PASSWORD_LENGTH) {
-            passwordView.setError(context.getString(R.string.error_password_short));
+            etPassword.setError(context.getString(R.string.error_password_short));
             return null;
         }
 
+        etEmail.setErrorEnabled(false);
+        etPassword.setErrorEnabled(false);
         return new String[]{email, password};
     }
 
-    public static String[] validateDisplayName(TextInputLayout firstnameView, TextInputLayout lastnameView){
+    public static String[] validateDisplayName(TextInputLayout firstnameView, TextInputLayout lastnameView) {
         firstnameView.setError(null);
         lastnameView.setError(null);
 
-        Context context  = firstnameView.getContext();
+        Context context = firstnameView.getContext();
 
         String firstname = firstnameView.getEditText().getText().toString();
-        if(TextUtils.isEmpty(firstname)){
+        if (TextUtils.isEmpty(firstname)) {
             firstnameView.setError(context.getString(R.string.error_firstname_empty));
             return null;
         }
@@ -108,7 +152,7 @@ public class Validator {
             return null;
         }
         String lastname = lastnameView.getEditText().getText().toString();
-        if(TextUtils.isEmpty(lastname)){
+        if (TextUtils.isEmpty(lastname)) {
             lastnameView.setError(context.getString(R.string.error_lastname_empty));
             return null;
         }
@@ -116,6 +160,9 @@ public class Validator {
             lastnameView.setError(context.getString(R.string.error_name_long));
             return null;
         }
+
+        firstnameView.setErrorEnabled(false);
+        lastnameView.setErrorEnabled(false);
         return new String[]{firstname, lastname};
     }
 
@@ -165,6 +212,9 @@ public class Validator {
             return null;
         }
 
+        oldPasswordView.setErrorEnabled(false);
+        newPasswordView.setErrorEnabled(false);
+        confirmPasswordView.setErrorEnabled(false);
         return new String[]{oldPassword, newPassword};
     }
 }

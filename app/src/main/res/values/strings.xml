@@ -17,4 +17,5 @@
     <string name="error_firstname_empty">First name cannot be empty</string>
     <string name="error_name_long">Name is too long</string>
     <string name="error_lastname_empty">Last name cannot be empty</string>
+    <string name="error_email_exists">Email already exists</string>
 </resources>

@@ -32,6 +32,11 @@ public class User {
     }
 
     @Exclude
+    public String getEmail(){
+        return email;
+    }
+
+    @Exclude
     public void setFullName(String fullName) {
         String[] firstAndLast = fullName.split(" ");
         this.firstname = firstAndLast[0];
